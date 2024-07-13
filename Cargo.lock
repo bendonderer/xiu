@@ -4003,7 +4003,6 @@ dependencies = [
  "tokio-metrics",
  "toml",
  "xrtsp",
- "xwebrtc",
 ]
 
 [[package]]

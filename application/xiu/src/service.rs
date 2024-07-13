@@ -19,7 +19,6 @@ use {
     streamhub::{notify::Notifier, notify::http::HttpNotifier, StreamsHub},
     tokio,
     xrtsp::rtsp::RtspServer,
-    xwebrtc::webrtc::WebRTCServer,
 };
 
 pub struct Service {
@@ -83,7 +82,6 @@ impl Service {
         self.start_hls(&mut stream_hub).await?;
         self.start_rtmp(&mut stream_hub).await?;
         self.start_rtsp(&mut stream_hub).await?;
-        self.start_webrtc(&mut stream_hub).await?;
         self.start_http_api_server(&mut stream_hub).await?;
         self.start_rtmp_remuxer(&mut stream_hub).await?;
 
@@ -253,31 +251,6 @@ impl Service {
             tokio::spawn(async move {
                 if let Err(err) = rtsp_server.run().await {
                     log::error!("rtsp server error: {}", err);
-                }
-            });
-        }
-
-        Ok(())
-    }
-
-    async fn start_webrtc(&mut self, stream_hub: &mut StreamsHub) -> Result<()> {
-        let webrtc_cfg = &self.cfg.webrtc;
-
-        if let Some(webrtc_cfg_value) = webrtc_cfg {
-            if !webrtc_cfg_value.enabled {
-                return Ok(());
-            }
-
-            let producer = stream_hub.get_hub_event_sender();
-
-            let listen_port = webrtc_cfg_value.port;
-            let address = format!("0.0.0.0:{listen_port}");
-
-            let auth = Self::gen_auth(&webrtc_cfg_value.auth, &self.cfg.authsecret);
-            let mut webrtc_server = WebRTCServer::new(address, producer, auth);
-            tokio::spawn(async move {
-                if let Err(err) = webrtc_server.run().await {
-                    log::error!("webrtc server error: {}", err);
                 }
             });
         }
