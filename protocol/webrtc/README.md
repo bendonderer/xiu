@@ -1,3 +1,0 @@
-A webrtc library.
-
-
