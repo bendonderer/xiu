@@ -32,7 +32,6 @@ rtmp = "0.6.4"
 xrtsp = "0.2.3"
 httpflv = "0.4.4"
 hls = "0.5.4"
-xwebrtc = "0.3.4"
 commonlib = "0.1.1"
 
 [features]

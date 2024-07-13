@@ -46,15 +46,6 @@ async fn main() -> Result<()> {
                 .conflicts_with("config_file_path"),
         )
         .arg(
-            Arg::new("webrtc")
-                .long("webrtc")
-                .short('w')
-                .value_name("port")
-                .help("Specify the webrtc(whip/whep) listening port.(e.g.:8900)")
-                .value_parser(value_parser!(usize))
-                .conflicts_with("config_file_path"),
-        )
-        .arg(
             Arg::new("httpflv")
                 .long("httpflv")
                 .short('f')
