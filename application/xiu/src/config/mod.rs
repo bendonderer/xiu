@@ -10,7 +10,6 @@ use std::vec::Vec;
 pub struct Config {
     pub rtmp: Option<RtmpConfig>,
     pub rtsp: Option<RtspConfig>,
-    pub webrtc: Option<WebRTCConfig>,
     pub httpflv: Option<HttpFlvConfig>,
     pub hls: Option<HlsConfig>,
     pub httpapi: Option<HttpApiConfig>,
@@ -23,7 +22,6 @@ impl Config {
     pub fn new(
         rtmp_port: usize,
         rtsp_port: usize,
-        webrtc_port: usize,
         httpflv_port: usize,
         hls_port: usize,
         log_level: String,
@@ -45,15 +43,6 @@ impl Config {
             rtsp_config = Some(RtspConfig {
                 enabled: true,
                 port: rtsp_port,
-                auth: None,
-            });
-        }
-
-        let mut webrtc_config: Option<WebRTCConfig> = None;
-        if webrtc_port > 0 {
-            webrtc_config = Some(WebRTCConfig {
-                enabled: true,
-                port: webrtc_port,
                 auth: None,
             });
         }
@@ -85,7 +74,6 @@ impl Config {
         Self {
             rtmp: rtmp_config,
             rtsp: rtsp_config,
-            webrtc: webrtc_config,
             httpflv: httpflv_config,
             hls: hls_config,
             httpapi: None,

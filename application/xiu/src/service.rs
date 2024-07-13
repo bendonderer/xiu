@@ -199,12 +199,7 @@ impl Service {
             }
         }
 
-        let mut whip_enabled = false;
-        if let Some(whip_cfg_value) = &self.cfg.webrtc {
-            if whip_cfg_value.enabled {
-                whip_enabled = true;
-            }
-        }
+        let whip_enabled = false;
 
         if !rtsp_enabled && !whip_enabled {
             return Ok(());
